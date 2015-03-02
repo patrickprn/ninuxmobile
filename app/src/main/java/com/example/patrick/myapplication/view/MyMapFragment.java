@@ -1,6 +1,8 @@
 package com.example.patrick.myapplication.view;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,9 +12,13 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.patrick.myapplication.R;
+import com.example.patrick.myapplication.bean.Geometry;
+import com.example.patrick.myapplication.bean.NodeBean;
 import com.example.patrick.myapplication.cluster.MyItem;
+import com.example.patrick.myapplication.network.ServerProxy;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -20,6 +26,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
+
+import org.w3c.dom.Node;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Patrizio Perna on 21/01/15.
@@ -30,9 +41,12 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     private String[] startFrom;
     private static View rootView;
     private ClusterManager<MyItem> mClusterManager;
+    private ArrayList<NodeBean> arrayNode;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        super.onCreateView(inflater, container, savedInstanceState);
+        Log.i("myMapFragment","onCreateView");
 
         if (rootView != null) {
             ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -57,6 +71,22 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
      return rootView;
     }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i("myMapFragment","onActivityCreated");
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i("myMapFragment","onViewCreated");
+        GetNodeListTask getNodeListTask = new GetNodeListTask();
+        getNodeListTask.execute();
+    }
+
 
     public void onDestroyView() {
         super.onDestroyView();
@@ -102,25 +132,73 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setOnCameraChangeListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
 
-        // Add cluster items (markers) to the cluster manager.
-        addItems();
-
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+            @Override
+            public boolean onClusterItemClick(MyItem myItem) {
+                return false;
+            }
+        });
     }
 
-    private void addItems() {
+    /**
+     * Task per recuperare la lista completa dei nodi
+     */
 
-        // Set some lat/lng coordinates to start with.
-        double lat = Float.parseFloat(startFrom[0]);
-        double lng =  Float.parseFloat(startFrom[1]);
+    // creo una classe innestata per reperire la lista di nodi
+    private class GetNodeListTask extends
+            AsyncTask<Void, Void, ArrayList<NodeBean>> {
+        private PowerManager.WakeLock mWakeLock;
 
-        // Add ten cluster items in close proximity, for purposes of this example.
-        for (int i = 0; i < 10; i++) {
-            double offset = i / 60d;
-            lat = lat + offset;
-            lng = lng + offset;
-            LatLng latlng = new LatLng(lat, lng);
-            MyItem offsetItem = new MyItem(latlng);
-            mClusterManager.addItem(offsetItem);
+        private String msg;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            PowerManager powerManager = (PowerManager) getActivity().getSystemService(getActivity().POWER_SERVICE);
+            mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK
+                    | PowerManager.ON_AFTER_RELEASE, "MainActivity");
+            mWakeLock.acquire();
+
+            Toast.makeText(getActivity(), "Comunicazione con il server in corso...", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected ArrayList<NodeBean> doInBackground(Void...voids) {
+            ServerProxy proxy = new ServerProxy();
+            try {
+                Log.i("doInBackground",
+                        "Comunicazione con il server in corso...");
+                return proxy.getNodesList("","roma","900");
+            } catch (IOException e) {
+                Log.i("doInBackground",
+                        "Errore nella comunicazione con il server in doBackground",
+                        e);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<NodeBean> result) {
+            super.onPostExecute(result);
+
+            Toast.makeText(getActivity(), "Dati scaricati", Toast.LENGTH_SHORT).show();
+            try{
+                for (NodeBean node :result){
+                    Geometry geo = node.getGeometry();
+                    String[] coordinates = geo.getCoordinates();
+                    LatLng nodeLatLng = new LatLng(Double.parseDouble(coordinates[1]),Double.parseDouble(coordinates[0]));
+                    MyItem myitem = new MyItem(nodeLatLng);
+                    mClusterManager.addItem(myitem);
+                }
+            }
+            catch(Exception e){
+                Toast.makeText(getActivity(),"Problem reading list of makers",Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
+
+
+
 }

@@ -26,7 +26,7 @@ public class ServerProxy {
 
     private String stringTypeJson = "format=json";
 
-    private String limit ="limit=100";
+
 
 
 
@@ -40,10 +40,10 @@ public class ServerProxy {
      * @return ArrayList<NodeBean> array di oggetti di tipo NodeBean
      * @throws IOException
      */
-    public ArrayList<NodeBean> getNodesList(String search) throws IOException {
+    public ArrayList<NodeBean> getNodesList(String search,String layer,String limit) throws IOException {
 
        // eseguo la connessione sicura al server e ottengo la lista nodi in formato json
-        String responseString =  connect("/nodes",search);
+        String responseString =  connect("/nodes",search,layer,limit);
 
         // DEBUG
         // Se il server non dovesse essere raggiungibile mi mostra alcuni nodi
@@ -75,10 +75,10 @@ public class ServerProxy {
      * @param search E' una stringa che identifica la parola ricercata
      * @return  Restituisce la stringa risultato in formato json
      */
-    private String connect(String service,String search){
+    private String connect(String service,String search,String layer,String limit){
         try {
             DataLoader dl = new DataLoader();
-            HttpResponse response = dl.secureLoadData(DEFAULT_SERVICE_ADDRESS+service+"/?"+"search="+search+"&"+limit+"&"+stringTypeJson);
+            HttpResponse response = dl.secureLoadData(DEFAULT_SERVICE_ADDRESS+service+"/?"+"search="+search+"&"+"layers="+layer+"&"+"limit="+limit+"&"+stringTypeJson);
             Log.i("URL",DEFAULT_SERVICE_ADDRESS+service+"/?"+"search="+search+"&"+limit+"&"+stringTypeJson);
 
             StringBuilder sb = new StringBuilder();

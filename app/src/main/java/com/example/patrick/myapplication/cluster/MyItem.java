@@ -9,6 +9,7 @@ import com.google.maps.android.clustering.ClusterItem;
 public class MyItem implements ClusterItem {
     private final LatLng mPosition;
 
+
     public MyItem(LatLng mPosition) {
         this.mPosition = mPosition;
     }

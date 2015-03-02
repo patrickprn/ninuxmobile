@@ -195,9 +195,9 @@ public class ListaNodiFragment extends Fragment implements SearchView.OnQueryTex
 
             ServerProxy proxy = new ServerProxy();
             try {
-                Log.i("onPreExecute",
+                Log.i("doInBackground",
                         "Comunicazione con il server in corso...");
-                return proxy.getNodesList(params[0]);
+                return proxy.getNodesList(params[0],"roma","100");
             } catch (IOException e) {
                 Log.i("doInBackground",
                         "Errore nella comunicazione con il server in doBackground",
