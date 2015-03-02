@@ -15,8 +15,6 @@ import com.example.patrick.myapplication.R;
 public class NearMeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_map,container,false);
-        return rootView;
+       return super.onCreateView(inflater, container, savedInstanceState);
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Latitude,Longitude,zoom -->
+    <string-array name="startFrom">
+        <item>41.9</item>
+        <item>12.416667</item>
+        <item>8</item>
+    </string-array>
+
+</resources>
