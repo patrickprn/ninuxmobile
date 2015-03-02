@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <TextView android:id="@+id/txtHeaderDetail"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:text="@string/ns_fragment_detail_header"
+        android:background="@color/ninux_color"
+        style="@style/Header"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/txtHeaderDetail"
+        android:weightSum="1">
+
+        <fragment
+            android:id="@+id/mapFragmentDetail"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/detailsText"
+            android:layout_width="wrap_content"
+            android:layout_height="96dp"
+            android:layout_marginTop="20dip"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30dip"
+            android:gravity="center"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:src="@drawable/skype"
+            />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

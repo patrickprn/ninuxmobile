@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/ns_settings_cat1">
+
+        <EditTextPreference
+            android:key="edittext_username"
+            android:title="@string/ns_settings_username_title"
+            android:summary="@string/ns_settings_username_summary"
+            android:dialogTitle="@string/dialog_title_edittext_preference" />
+
+        <EditTextPreference
+            android:key="edittext_password"
+            android:title="@string/ns_settings_password_title"
+            android:summary="@string/ns_settings_password_summary"
+            android:inputType="textPassword"
+            android:dialogTitle="@string/dialog_title_edittext_preference" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/ns_settings_cat2">
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="@string/ns_settings_checkbox_refresh_db"
+            android:summary="@string/summary_checkbox_preference" />
+        <EditTextPreference
+            android:key="edittext_mappa"
+            android:title="@string/ns_settings_refresh_title"
+            android:summary="@string/ns_settings_refresh_summary"
+            android:dialogTitle="@string/dialog_title_edittext_preference" />
+
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/ns_settings_cat3">
+
+        <EditTextPreference
+            android:key="edittext_gps"
+            android:title="@string/ns_settings_gps_radius_title"
+            android:summary="@string/ns_settings_gps_radius_summary"
+            android:dialogTitle="@string/dialog_title_edittext_preference" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

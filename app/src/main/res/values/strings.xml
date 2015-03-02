@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="app_name">Ninux Mobile</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_save">Save</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_text">Navigation Drawer example.</string>
+
+    <string name="settings_activity_label">Impostazioni</string>
+    <string name="detail_activity_label">Dettagli</string>
+
+    <!-- Stringhe per menu drawer -->
+    <string name="ns_menu_main_header">Title</string>
+    <string name="ns_menu_main_header2">Title 2</string>
+    <string name="ns_menu_open">Ninux Mobile</string>
+    <string name="ns_menu_close">Menu</string>
+    <string name="ns_menu_snippet1">Mappa</string>
+    <string name="ns_menu_snippet2">Lista utenti</string>
+    <string name="ns_menu_snippet3">Nodi</string>
+    <string name="ns_menu_snippet4">Nelle vicinanze</string>
+
+
+    <string name="option_menu_refresh">Refresh</string>
+    <string name="option_menu_search_hint">Search Here</string>
+
+    <!-- Stringhe per fragment nodi -->
+    <string name="ns_fragment_nodes_header">Node List</string>
+    <string name="ns_fragment_nodes_header_status">Stato</string>
+    <string name="ns_fragment_nodes_header_name">Nome</string>
+    <string name="ns_fragment_nodes_header_layer">Layer</string>
+
+
+    <!-- Stringhe per fragment del dettaglio nodi-->
+    <string name="ns_fragment_detail_header">Node Detail</string>
+
+
+
+    <!-- Stringhe per fragment settings -->
+    <string name="ns_settings_cat1">Impostazioni utente</string>
+        <string name="ns_settings_username_title">User name</string>
+        <string name="ns_settings_username_summary">What\'s your username?</string>
+        <string name="ns_settings_username_dialogTitle">Dialog utente</string>
+        <string name="ns_settings_password_title">Password</string>
+        <string name="ns_settings_password_summary">How do you log in?</string>
+
+    <string name="ns_settings_cat2">Impostazioni refresh</string>
+        <string name="ns_settings_checkbox_refresh_db">Aggiornamento database</string>
+        <string name="summary_checkbox_preference">Vuoi aggiornare il database automaticamente?</string>
+        <string name="ns_settings_refresh_title">Refresh Interval</string>
+        <string name="ns_settings_refresh_summary">Imposta frequenza (ore)</string>
+
+        <string name="dialog_title_edittext_preference">Dialog</string>
+
+    <string name="ns_settings_cat3">Impostazioni posizione</string>
+        <string name="ns_settings_gps_radius_title">Raggio GPS</string>
+        <string name="ns_settings_gps_radius_summary">Imposta un raggio di notifica nodi (metri) rispetto alla tua attuale
+        posizione</string>
+
+
+    <string name="error_connection_server">Connessione al server non disponibile</string>
+
+
+</resources>
