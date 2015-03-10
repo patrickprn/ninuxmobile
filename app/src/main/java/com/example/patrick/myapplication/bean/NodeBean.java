@@ -1,10 +1,15 @@
 
 package com.example.patrick.myapplication.bean;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class NodeBean implements Parcelable {
+import com.example.patrick.myapplication.R;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.clustering.ClusterItem;
+
+public class NodeBean implements Parcelable,ClusterItem {
     private String added;
     private String address;
     private String description;
@@ -146,9 +151,7 @@ public class NodeBean implements Parcelable {
         dest.writeString(address);
         dest.writeString(description);
         dest.writeString(details);
-
         dest.writeString(elev);
-
         dest.writeParcelable(geometry, flags);
         dest.writeString(layer);
         dest.writeString(layer_name);
@@ -192,4 +195,15 @@ public class NodeBean implements Parcelable {
         }
     };
 
+
+    public boolean isActive(){
+        return (this.getStatus().equals("attivi"));
+    }
+
+    @Override
+    public LatLng getPosition() {
+        String[] coordinates = getGeometry().getCoordinates();
+        LatLng nodeLatLng = new LatLng(Double.parseDouble(coordinates[1]),Double.parseDouble(coordinates[0]));
+        return nodeLatLng;
+    }
 }

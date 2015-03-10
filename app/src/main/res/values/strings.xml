@@ -63,4 +63,8 @@
     <string name="error_connection_server">Connessione al server non disponibile</string>
 
 
+
+
+    <!-- Stringhe per nodeBean -->
+    <string name="label_nodi_attivi">attivi</string>
 </resources>

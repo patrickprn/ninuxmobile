@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -75,9 +76,16 @@ public class MyDetailFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setMyLocationEnabled(true);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nodeCoordinates, 12));
 
+        int resource;
+        if(node.isActive())
+            resource = R.drawable.attivo;
+        else
+            resource = R.drawable.potenziale;
+
         googleMap.addMarker(new MarkerOptions()
                 .title(node.getName())
                 .snippet(node.getDescription())
-                .position(nodeCoordinates));
+                .position(nodeCoordinates))
+                .setIcon(BitmapDescriptorFactory.fromResource(resource));
     }
 }

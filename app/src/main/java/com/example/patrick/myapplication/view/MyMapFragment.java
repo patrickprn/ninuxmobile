@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.example.patrick.myapplication.R;
 import com.example.patrick.myapplication.bean.Geometry;
 import com.example.patrick.myapplication.bean.NodeBean;
-import com.example.patrick.myapplication.cluster.MyItem;
+import com.example.patrick.myapplication.cluster.MyClusterRenderer;
 import com.example.patrick.myapplication.network.ServerProxy;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,7 +40,7 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     private MapFragment mapFragment;
     private String[] startFrom;
     private static View rootView;
-    private ClusterManager<MyItem> mClusterManager;
+    private ClusterManager<NodeBean> mClusterManager;
     private ArrayList<NodeBean> arrayNode;
 
     @Override
@@ -125,16 +125,18 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
-        mClusterManager = new ClusterManager<MyItem>(getActivity(),googleMap);
+        mClusterManager = new ClusterManager<NodeBean>(getActivity(),googleMap);
 
-        // Point the map's listeners at the listeners implemented by the cluster
-        // manager.
+        // Setting the custom render
+        mClusterManager.setRenderer(new MyClusterRenderer(getActivity(),googleMap, mClusterManager));
+
+        // Point the map's listeners at the listeners implemented by the cluster manager.
         googleMap.setOnCameraChangeListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
 
-        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<NodeBean>() {
             @Override
-            public boolean onClusterItemClick(MyItem myItem) {
+            public boolean onClusterItemClick(NodeBean nodeBean) {
                 return false;
             }
         });
@@ -185,11 +187,7 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
             Toast.makeText(getActivity(), "Dati scaricati", Toast.LENGTH_SHORT).show();
             try{
                 for (NodeBean node :result){
-                    Geometry geo = node.getGeometry();
-                    String[] coordinates = geo.getCoordinates();
-                    LatLng nodeLatLng = new LatLng(Double.parseDouble(coordinates[1]),Double.parseDouble(coordinates[0]));
-                    MyItem myitem = new MyItem(nodeLatLng);
-                    mClusterManager.addItem(myitem);
+                    mClusterManager.addItem(node);
                 }
             }
             catch(Exception e){
