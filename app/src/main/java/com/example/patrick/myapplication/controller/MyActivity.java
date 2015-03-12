@@ -39,6 +39,7 @@ import com.example.patrick.myapplication.view.NearMeFragment;
 
 public class MyActivity extends ActionBarActivity implements
         SearchView.OnQueryTextListener, ListaNodiFragment.OnMyListaNodiItemClick {
+
     private String[] menuItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -46,6 +47,11 @@ public class MyActivity extends ActionBarActivity implements
     private CustomActionBarDrawerToggle mDrawerToggle;
     private CursorAdapter adapter;
     private ListaNodiFragment nodiFragment;
+
+    private MyMapFragment myMapFragment;
+    private ListaNodiFragment listaNodiFragment;
+    private ListaUtentiFragment listaUtentiFragment;
+    private NearMeFragment nearMeFragment;
 
 
     @Override
@@ -297,18 +303,33 @@ public class MyActivity extends ActionBarActivity implements
             //Toast.makeText(MyActivity.this, text, Toast.LENGTH_LONG).show();
             Fragment rFragment = null;
             switch (position) {
-                case 1: {
-                    rFragment = new MyMapFragment();
+
+                case 1:{
+                    if (myMapFragment == null)
+                        myMapFragment = new MyMapFragment();
+                    rFragment = myMapFragment;
                 }
-                break;
-                case 2:
-                    rFragment = new ListaUtentiFragment();
                     break;
-                case 3:
-                    rFragment = new ListaNodiFragment();
+
+                case 2: {
+                    if (listaUtentiFragment == null)
+                        listaUtentiFragment = new ListaUtentiFragment();
+                    rFragment  = listaUtentiFragment;
+                }
                     break;
-                case 4:
-                    rFragment = new NearMeFragment();
+
+                case 3:{
+                    if( listaNodiFragment == null)
+                        listaNodiFragment= new ListaNodiFragment();
+                    rFragment = listaNodiFragment;
+                }
+                    break;
+
+                case 4:{
+                    if ( nearMeFragment == null)
+                        nearMeFragment = new NearMeFragment();
+                    rFragment = nearMeFragment;
+                }
             }
             // Getting reference to the FragmentManager
             FragmentManager fragmentManager = getSupportFragmentManager();
