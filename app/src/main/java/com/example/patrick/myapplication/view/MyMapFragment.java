@@ -41,7 +41,8 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     private String[] startFrom;
     private static View rootView;
     private ClusterManager<NodeBean> mClusterManager;
-    private ArrayList<NodeBean> arrayNode;
+    private GetNodeListTask getNodeListTask;
+    private boolean first = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,14 +78,17 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.i("myMapFragment","onActivityCreated");
+        if (first){
+            getNodeListTask = new GetNodeListTask();
+            getNodeListTask.execute();
+            first = false;
+        }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.i("myMapFragment","onViewCreated");
-        GetNodeListTask getNodeListTask = new GetNodeListTask();
-        getNodeListTask.execute();
     }
 
 
@@ -186,6 +190,7 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
             Toast.makeText(getActivity(), "Dati scaricati", Toast.LENGTH_SHORT).show();
             try{
+                mClusterManager.clearItems();
                 for (NodeBean node :result){
                     mClusterManager.addItem(node);
                 }

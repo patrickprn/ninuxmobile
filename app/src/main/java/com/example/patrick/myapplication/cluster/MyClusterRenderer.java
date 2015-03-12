@@ -32,6 +32,7 @@ public class MyClusterRenderer extends DefaultClusterRenderer<NodeBean> {
         super.onBeforeClusterItemRendered(item, markerOptions);
         int resource;
         markerOptions.title(item.getName());
+        markerOptions.snippet(item.getDescription());
         if(item.isActive())
             resource = R.drawable.attivo;
         else
