@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.patrick.myapplication"
         minSdkVersion 11
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }

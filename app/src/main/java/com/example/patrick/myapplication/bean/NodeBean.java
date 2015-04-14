@@ -197,7 +197,7 @@ public class NodeBean implements Parcelable,ClusterItem {
 
 
     public boolean isActive(){
-        return (this.getStatus().equals("attivi"));
+        return (this.getStatus().equals("active"));
     }
 
     @Override

@@ -5,12 +5,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Lista utenti"
+        android:text="https://telegram.me/giulia_marley"
         android:id="@+id/textView"
+        android:linksClickable="true"
+        android:autoLink="web|email"
         android:layout_gravity="center_horizontal|top" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="https://telegram.me/stickers"
+        android:id="@+id/textView2"
+        android:linksClickable="true"
+        android:autoLink="web|email"
+        android:layout_gravity="center_horizontal|top" />
+
+</LinearLayout>
+
 </FrameLayout>
