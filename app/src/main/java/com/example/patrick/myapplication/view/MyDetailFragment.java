@@ -1,5 +1,10 @@
 package com.example.patrick.myapplication.view;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,7 +12,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.patrick.myapplication.R;
 import com.example.patrick.myapplication.bean.NodeBean;
@@ -55,8 +63,39 @@ public class MyDetailFragment extends Fragment implements OnMapReadyCallback {
         // Test oggetto recuperato
         Log.i("myDetailFragment",node.getUser());
 
+        ((ImageButton) rootView.findViewById(R.id.skypeButtonChat)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String skypeName = "marco_trib4";
+                if (skypeName.length() <= 0) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Please enter skype username to message", Toast.LENGTH_SHORT).show();
+                } else {
+                    String mySkypeUri = "skype:" + skypeName + "?chat";
+                    SkypeUri(getActivity(), mySkypeUri);
+                }
+            }
+        });
 
+        ((ImageButton) rootView.findViewById(R.id.skypeButtonCall)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String skypeName = "marco_trib4";
+                if (skypeName.length() <= 0) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Please enter skype username to message", Toast.LENGTH_SHORT).show();
+                } else {
+                    String mySkypeUri = "skype:"+skypeName+"?call";
+                    SkypeUri(getActivity(), mySkypeUri);
+                }
+            }
+        });
 
+        ((ImageButton) rootView.findViewById(R.id.telegramButtonChat)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://telegram.me/stickers"));
+                startActivity(browserIntent);
+            }
+        });
         return rootView;
     }
 
@@ -87,5 +126,47 @@ public class MyDetailFragment extends Fragment implements OnMapReadyCallback {
                 .snippet(node.getDescription())
                 .position(nodeCoordinates))
                 .setIcon(BitmapDescriptorFactory.fromResource(resource));
+    }
+
+    public void SkypeUri(Context myContext, String mySkypeUri) {
+
+        // Make sure the Skype for Android client is installed.
+        if (!isSkypeClientInstalled(myContext)) {
+            goToMarket(myContext);
+            return;
+        }
+        Uri skypeUri = Uri.parse(mySkypeUri);
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, skypeUri);
+        myIntent.setComponent(new ComponentName("com.skype.raider", "com.skype.raider.Main"));
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        myContext.startActivity(myIntent);
+
+        return;
+    }
+
+    /**
+     * Determine whether the Skype for Android client is installed on this device.
+     */
+    public boolean isSkypeClientInstalled(Context myContext) {
+        PackageManager myPackageMgr = myContext.getPackageManager();
+        try {
+            myPackageMgr.getPackageInfo("com.skype.raider", PackageManager.GET_ACTIVITIES);
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            return (false);
+        }
+        return (true);
+    }
+
+    /**
+     * Install the Skype client through the market: URI scheme.
+     */
+
+    public void goToMarket(Context myContext) {
+        Uri marketUri = Uri.parse("market://details?id=com.skype.raider");
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        myContext.startActivity(myIntent);
+        return;
     }
 }

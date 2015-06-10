@@ -16,20 +16,14 @@
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:layout_below="@+id/txtHeaderDetail"
-        android:weightSum="1">
 
         <fragment
             android:id="@+id/mapFragmentDetail"
             android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_below="@id/txtHeaderDetail"/>
         <TextView
             android:id="@+id/detailsText"
             android:layout_width="wrap_content"
@@ -38,19 +32,60 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30dip"
             android:gravity="center"
+            android:layout_below="@id/mapFragmentDetail"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton2"
+            android:id="@+id/skypeButtonChat"
             android:gravity="center"
-            android:layout_gravity="right"
-            android:src="@drawable/skype"
+            android:layout_gravity="left"
+            android:layout_below="@id/detailsText"
+            android:src="@drawable/skypeicon"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chat con Skype"
+            android:layout_below="@id/detailsText"
+            android:layout_toRightOf="@id/skypeButtonChat"
+            android:layout_margin="10dp" />
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/skypeButtonCall"
+            android:gravity="center"
+            android:layout_gravity="left"
+            android:layout_below="@id/skypeButtonChat"
+            android:src="@drawable/skypeicon"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chiamata con Skype"
+            android:layout_below="@id/skypeButtonChat"
+            android:layout_toRightOf="@id/skypeButtonCall"
+            android:layout_margin="10dp"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/telegramButtonChat"
+        android:gravity="center"
+        android:layout_gravity="left"
+        android:scaleType="fitCenter"
+        android:layout_below="@id/skypeButtonCall"
+        android:src="@drawable/tgicon"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat con Telegram"
+        android:layout_below="@id/skypeButtonCall"
+        android:layout_toRightOf="@id/telegramButtonChat"
+        android:layout_margin="10dp"/>
 
-    </LinearLayout>
 
 
 </RelativeLayout>

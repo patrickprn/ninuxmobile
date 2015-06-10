@@ -6,4 +6,5 @@
     <color name="black">#000000</color>
     <color name="orange">#ffa500</color>
     <color name="ninux_color">#cc3636</color>
+    <color name="ninux_color_light">#d14a4a</color>
 </resources>

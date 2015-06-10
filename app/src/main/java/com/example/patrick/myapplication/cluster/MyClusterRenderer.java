@@ -1,6 +1,7 @@
 package com.example.patrick.myapplication.cluster;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.patrick.myapplication.R;
 import com.example.patrick.myapplication.bean.NodeBean;
@@ -23,9 +24,10 @@ public class MyClusterRenderer extends DefaultClusterRenderer<NodeBean> {
     @Override
     protected void onClusterItemRendered(NodeBean clusterItem, Marker marker) {
         super.onClusterItemRendered(clusterItem, marker);
-
-        // access to marker
+        marker.showInfoWindow();
     }
+
+
 
     @Override
     protected void onBeforeClusterItemRendered(NodeBean item, MarkerOptions markerOptions) {
